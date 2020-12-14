@@ -1,16 +1,27 @@
-MCQ Breakdown quiz report
+# MProctoring
 
-Install into /mod/quiz/report/mcq
+This quiz report was created by ME Educational Technologies and
+Consultancy Services [MEETCS].
+The main purpose of these plugin is provide proctoring report of M-Proctoring quiz access plugin.
 
-This is a quiz report, so once you've installed it, to try it out you'll need a quiz that contains
-some multiple choice questions, and which has been attempted by some students.
+## Dependencies
+For Use of these plugin "M-Proctoring quiz access plugin" is required.
 
-(Note that it does not work with the Random question type, nor do I see how it could. Note also that I
-refer here about the Random *question type*. The report works perfectly well with shuffled answers
-or shuffled questions.)
+## Installation
+1. Copy this plugin to the mod\quiz\report\mproctoring folder on the server
+2. Login as administrator
+3. Go to Site Administrator > Notification
+4. Install the plugin
 
-Go to your quiz, and click 'Results' in the Navigation block. The 'MCQ breakdown' will appear below.
-Click this to see the report.
+## Security
+If you discover any security related issues, please email support@meetcs.com instead of using the issue tracker.
 
-The report should be self explanatory, but note that there is a 'print view' link at top right;
-this opens the report in a format suitable for printing.
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## License
+2020 [MEETCS](https://www.meetcs.com/) [support@meetcs.com](mailto:support@meetcs.com)
+
+The GNU GENERAL PUBLIC LICENSE. Please see License File for more information.
