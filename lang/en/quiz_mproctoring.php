@@ -22,10 +22,10 @@
  * @copyright  2012 Steve Bond
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-$string['pluginname'] = 'M-Proctoring';
-$string['reportmproctoring'] = 'M-Proctoring';
-$string['mproctoring']='M-Proctoring';
-$string['mproctoringtitle'] = 'M-Proctoring';
+$string['pluginname'] = 'Mega Proctor Report';
+$string['reportmproctoring'] = 'Mega Proctor';
+$string['mproctoring']='Mega Proctor';
+$string['mproctoringtitle'] = 'Mega Proctor';
 $string['allstudents'] = 'Students';
 $string['allusers'] = 'All users';
 $string['correctoption'] = 'Correct option';
@@ -68,8 +68,7 @@ $string['warningnomcq'] = 'There are no (non-random) multiple choice questions i
 $string['warningnotallmcq'] = 'Only the multiple choice questions in this quiz are displayed below. However, the grades shown include one or more questions of other types that are used in this quiz.';
 $string['wholecourse'] = 'Whole course';
 $string['wholegrouping'] = 'Whole grouping';
-$string['mproctoring'] = 'MProctoring';
-$string['pluginname'] = 'M Proctoring Result';
+$string['mproctoring'] = 'Mega Proctor';
 $string['email'] = 'Email';
 $string['url'] = 'URL';
 $string['screencapture'] = 'screencapture';
