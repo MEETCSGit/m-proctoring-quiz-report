@@ -21,11 +21,12 @@
  * @copyright Meetcs
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-require_once(__DIR__'../../../../config.php');
+
+require_once('../../../../config.php');
 require_once("$CFG->libdir/excellib.class.php");
 $downloadfilename = clean_filename("Report.xls");
-$ve = ''.$ve.'';
-$u = ''.$u.'';
+$ve = 'quizaccess_mproctoring_ueve';
+$u = 'user';
 $quizid = $_REQUEST['quizid'];
 $row = 1;
 $fi = isset($SESSION->gradereport['filterfirstname']) ? $SESSION->gradereport['filterfirstname'] : '';
@@ -46,19 +47,19 @@ $quizdata = $DB->get_record('quiz', array('id'  => $quizid)); // Print cellls
 $quizid = $quizdata->id;
 if ($fi) {
     $where = 'ue.quizid ='.$quizid.' AND firstname LIKE "'.$fi.'%"';
-    $sql = 'SELECT ue.id as id, u.*,ue.attempt, ue.eventsecond, ue.url url1, ue.urlfilesize FROM '.$ve.' ue JOIN '.$u.' as u ON ue.userid = u.id where '.$where;
+    $sql = 'SELECT ue.id as id, u.*,ue.attempt, ue.eventsecond, ue.url url1, ue.urlfilesize FROM {'.$ve.'} ue JOIN {'.$u.'} as u ON ue.userid = u.id where '.$where;
     $rec = $DB->get_records_sql($sql);
 } else if ($li) {
     $where = 'ue.quizid = '.$quizid.' AND lastname LIKE "'.$li.'%"';
-    $sql = 'SELECT ue.id,u.*,ue.attempt, ue.eventsecond,ue.url url1,ue.urlfilesize FROM '.$ve.' ue JOIN '.$u.' as u ON ue.userid = u.id where '.$where;
+    $sql = 'SELECT ue.id,u.*,ue.attempt, ue.eventsecond,ue.url url1,ue.urlfilesize FROM {'.$ve.'} ue JOIN {'.$u.'} as u ON ue.userid = u.id where '.$where;
     $rec = $DB->get_records_sql($sql);
 } else if ($fi && $li) {
     $where = 'ue.quizid = '.$quizid.' AND firstname LIKE "'.$fi.'%"AND lastname LIKE "'.$li.'%"';
-    $sql = 'SELECT ue.id,u.*,ue.attempt,ue.eventsecond,ue.url url1,ue.urlfilesize FROM '.$ve.' ue JOIN '.$u.' as u ON ue.userid = u.id where '.$where;
+    $sql = 'SELECT ue.id,u.*,ue.attempt,ue.eventsecond,ue.url url1,ue.urlfilesize FROM {'.$ve.'} ue JOIN {'.$u.'} as u ON ue.userid = u.id where '.$where;
     $rec = $DB->get_records_sql($sql);
 } else {
     $where = 'ue.quizid = '.$quizid.' AND firstname LIKE "'.$fi.'%"';
-    $sql = 'SELECT ue.id,u.*,ue.attempt,ue.eventsecond,ue.url url1,ue.urlfilesize FROM '.$ve.' ue JOIN '.$u.' as u ON ue.userid = u.id where '.$where;
+    $sql = 'SELECT ue.id,u.*,ue.attempt,ue.eventsecond,ue.url url1,ue.urlfilesize FROM {'.$ve.'} ue JOIN {'.$u.'} as u ON ue.userid = u.id where '.$where;
     $rec = $DB->get_records_sql($sql);
 }
 foreach ($rec as $records) {
