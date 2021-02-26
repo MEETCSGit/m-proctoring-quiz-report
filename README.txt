@@ -10,7 +10,7 @@ For Use of these plugin "M-Proctoring quiz access plugin" is required.
 ## Installation
 1. Copy this plugin to the mod\quiz\report\mproctoring folder on the server
 2. Login as administrator
-3. Go to Site Administrator > Notification
+3. Go to Site Administrator > Plugin
 4. Install the plugin
 
 ## Security
