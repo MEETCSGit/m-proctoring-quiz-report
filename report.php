@@ -39,8 +39,8 @@ class quiz_mproctoring_report extends quiz_default_report {
         $sort = optional_param('sort', 1, PARAM_INT);
         $highlightcorrect = optional_param('highlightcorrect', 1, PARAM_INT);
         $print = optional_param('print', 0, PARAM_INT);
-        $page = optional_param('page', 0, PARAM_INT); // active page.
-        $courseid = required_param('id', PARAM_INT); // course id.
+        $page = optional_param('page', 0, PARAM_INT); // ...active page.
+        $courseid = required_param('id', PARAM_INT); // ...course id.
         $graderreportsifirst = optional_param('sifirst', null, PARAM_NOTAGS);
         $graderreportsilast = optional_param('silast', null, PARAM_NOTAGS);
         if (isset($graderreportsifirst)) {
@@ -50,10 +50,10 @@ class quiz_mproctoring_report extends quiz_default_report {
             $SESSION->gradereport['filtersurname'] = $graderreportsilast;
         }
         $PAGE->set_url(new moodle_url('/grade/report/grader/index.php',  array('id' => $courseid)));
-        if ($print == 1) { // Set appropriate page layout if necessary.
+        if ($print == 1) { // ...Set appropriate page layout if necessary.
             $PAGE->set_pagelayout('base');
         }
-        $context = context_module::instance($cm->id); // Get context.
+        $context = context_module::instance($cm->id); // ...Get context.
         $reporturl = $CFG->wwwroot . '/mod/quiz/report.php';
         $this->print_header_and_tabs($cm,  $course,  $quiz,  'MProctoring'); // Start output.
         $quizdata = $DB->get_record('quiz',  array('id' => $cm->instance));
@@ -61,7 +61,7 @@ class quiz_mproctoring_report extends quiz_default_report {
         if (is_siteadmin()) {
             $quizid = $quizdata->id;
             echo "</br>";
-            $gpr = new grade_plugin_return( // u search.
+            $gpr = new grade_plugin_return( // ...u search.
             array('type' => 'report', 'plugin' => 'grader', 'course' => $course, 'page' => $page));
             $ue = 'quizaccess_mproctoring_ueve';
             $u = 'user';
@@ -82,22 +82,27 @@ class quiz_mproctoring_report extends quiz_default_report {
                 $quizid = $quizdata->id;
                 if ($firstinitial) {
                     $where = 'ue.quizid='.$quizid.' AND firstname LIKE "'.$firstinitial.'%"';
-                    $select = 'ue.id, u.id uid, u.firstname, u.picture, u.lastname, u.email, ue.attempt, ue.eventsecond, ue.url as url1, ue.urlfilesize';
+                    $select = 'ue.id, u.id uid, u.firstname, u.picture, u.lastname, u.email,';
+                    $select = $select . ' ue.attempt, ue.eventsecond, ue.url as url1, ue.urlfilesize';
                     $sql = 'SELECT '.$select.' FROM {'.$ue.'} as ue JOIN {'.$u.'} as u ON ue.userid=u.id where '.$where;
                     $rec = $DB->get_records_sql($sql);
                 } else if ($lastinitial) {
                     $where = 'ue.quizid=' . $quizid . ' AND lastname LIKE "' . $lastinitial . '%"';
-                    $select = 'ue.id, u.id uid, u.firstname, u.picture, u.lastname, u.email as email, ue.attempt, ue.eventsecond, ue.url as url1, ue.urlfilesize';
+                    $select = 'ue.id, u.id uid, u.firstname, u.picture, u.lastname, ';
+                    $select = $select . 'u.email as email, ue.attempt, ue.eventsecond, ue.url as url1, ue.urlfilesize';
                     $sql = 'SELECT '.$select.' FROM {'.$ue.'} as ue Inner JOIN  {'.$u.'} as u ON ue.userid=u.id where '.$where;
                     $rec = $DB->get_records_sql($sql);
                 } else if ($firstinitial && $lastinitial) {
-                    $where = ' ue.quizid=' . $quizid . ' AND firstname LIKE "' . $firstinitial . '%"AND lastname LIKE "' . $lastinitial . '%"';
-                    $select = 'ue.id, u.id uid, u.firstname, u.picture, u.lastname, u.email, ue.attempt, ue.eventsecond, ue.url as url1, ue.urlfilesize';
+                    $where = ' ue.quizid=' . $quizid . ' AND firstname LIKE "' .
+                    $firstinitial . '%"AND lastname LIKE "' . $lastinitial . '%"';
+                    $select = 'ue.id, u.id uid, u.firstname, u.picture,';
+                    $select = $select . ' u.lastname, u.email, ue.attempt, ue.eventsecond, ue.url as url1, ue.urlfilesize';
                     $sql = 'SELECT '.$select.' FROM {'.$ue.'} as ue Inner JOIN  {'.$u.'} as u ON ue.userid=u.id where '.$where;
                     $rec = $DB->get_records_sql($sql);
                 } else {
                     $where = ' ue.quizid=' . $quizid . ' AND firstname LIKE "' . $firstinitial . '%"';
-                    $select = 'ue.id, u.id as uid, u.picture, u.firstname, u.lastname, u.email, ue.attempt, ue.eventsecond, ue.url as url1, ue.urlfilesize';
+                    $select = 'ue.id, u.id as uid, u.picture, u.firstname, u.lastname, ';
+                    $select = $select . 'u.email, ue.attempt, ue.eventsecond, ue.url as url1, ue.urlfilesize';
                     $sql = 'SELECT '.$select.' FROM {'.$ue.'} as ue Inner JOIN  {'.$u.'} as u ON ue.userid=u.id where '.$where;
 
                     $rec = $DB->get_records_sql($sql);
@@ -117,9 +122,12 @@ class quiz_mproctoring_report extends quiz_default_report {
                         $urlphoto = "<img src='" . $src . "'/>";
                     }
                     if ($urlfilesize == '0') {
-                        $url = "<b><a class=''  href='" . $CFG->wwwroot . "/mod/quiz/accessrule/mproctoring/download.php?url1=" . $records->url1 . "' >Download </a> </b>";
+                        $url = "<b><a class=''  href='" . $CFG->wwwroot . "/mod/quiz/accessrule/mproctoring/download.php?url1=".
+                        $records->url1 . "' >Download </a> </b>";
                     } else {
-                        $url = "<b><a style='color:red' href='" . $CFG->wwwroot . "/mod/quiz/accessrule/mproctoring/download.php?url1=" . $records->url1 . "' >Download </a></b> ";
+                        $url = "<b><a style='color:red' href='".
+                        $CFG->wwwroot . "/mod/quiz/accessrule/mproctoring/download.php?url1=".
+                        $records->url1 . "' >Download </a></b> ";
                     }
                     $eventsecond = number_format((float)$records->eventsecond,  2,  '.',  '') . "%";
                     $table->data[] = array($urlphoto,  $firstname . " " . $lastname,  $email,  $attempt,  $url,  $eventsecond);

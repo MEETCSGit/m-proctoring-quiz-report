@@ -24,7 +24,7 @@
  */
 $string['pluginname'] = 'Mega Proctor Report';
 $string['reportmproctoring'] = 'Mega Proctor';
-$string['mproctoring']='Mega Proctor';
+$string['mproctoring'] = 'Mega Proctor';
 $string['mproctoringtitle'] = 'Mega Proctor';
 $string['allstudents'] = 'Students';
 $string['allusers'] = 'All users';

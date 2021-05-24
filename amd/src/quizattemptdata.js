@@ -23,11 +23,12 @@
  *             Abhishek (abhishek.ambokar@camplus.co.in)
  * @copyright  Meetcs@2020
  */
-require.config( {
+require.config({
     paths: {
         'datatables.net': '//cdn.datatables.net/1.10.21/js/jquery.dataTables.min',
     }
-} );
+});
+
 function loadCss(url) {
     var link = document.createElement("link");
     link.type = "text/css";
@@ -35,28 +36,28 @@ function loadCss(url) {
     link.href = url;
     document.getElementsByTagName("head")[0].appendChild(link);
 }
-define(['jquery','datatables.net'], function($) {
+define(['jquery', 'datatables.net'], function($) {
     return {
         init: function(data) {
             loadCss("//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css");
             $('#abc').append(
-                $('</br>') ,
-                $('<table/>' , {
-                    'id':"dataUser" ,
-                    'class' : "table table-striped table-bordered" ,
-                    'width':"100%"
+                $('</br>'),
+                $('<table/>', {
+                    'id': "dataUser",
+                    'class': "table table-striped table-bordered",
+                    'width': "100%"
                 }));
-                $('#dataUser').DataTable( {
-                    data: data,
-                    columns: [
-                        { title: " " },
-                        { title: "Firstname / Lastname" },
-                        { title: "Email" },
-                        { title: "Attempt" },
-                        { title: "Browser History" },
-                        { title: "Out of Focus" }
-                    ]
-                });
+            $('#dataUser').DataTable({
+                data: data,
+                columns: [
+                    { title: " " },
+                    { title: "Firstname / Lastname" },
+                    { title: "Email" },
+                    { title: "Attempt" },
+                    { title: "Browser History" },
+                    { title: "Out of Focus" }
+                ]
+            });
         }
     };
 });

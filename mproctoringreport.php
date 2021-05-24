@@ -24,6 +24,7 @@
 
 require_once('../../../../config.php');
 require_once("$CFG->libdir/excellib.class.php");
+require_login();
 $downloadfilename = clean_filename("Report.xls");
 $ve = 'quizaccess_mproctoring_ueve';
 $u = 'user';
@@ -43,28 +44,31 @@ $myxls->write_string(0, 1 , 'Email', $formatbc);
 $myxls->write_string(0, 2 , 'Attempt', $formatbc);
 $myxls->write_string(0, 3 , 'URL History', $formatbc);
 $myxls->write_string(0, 4, 'Out Of Focus' , $formatbc);
-$quizdata = $DB->get_record('quiz', array('id'  => $quizid)); // Print cellls
+$quizdata = $DB->get_record('quiz', array('id'  => $quizid)); // Print cellls.
 $quizid = $quizdata->id;
 if ($firstinitial) {
     $where = 'ue.quizid='.$quizid.' AND firstname LIKE "'.$firstinitial.'%"';
-    $select = 'ue.id, u.id uid, u.firstname, u.picture, u.lastname, u.email, ue.attempt, ue.eventsecond, ue.url as url1, ue.urlfilesize';
+    $select = 'ue.id, u.id uid, u.firstname, u.picture, u.lastname, u.email,';
+    $select = $select. ' ue.attempt, ue.eventsecond, ue.url as url1, ue.urlfilesize';
     $sql = 'SELECT '.$select.' FROM {'.$ve.'} as ue JOIN {'.$u.'} as u ON ue.userid=u.id where '.$where;
     $rec = $DB->get_records_sql($sql);
 } else if ($lastinitial) {
     $where = 'ue.quizid=' . $quizid . ' AND lastname LIKE "' . $lastinitial . '%"';
-    $select = 'ue.id, u.id uid, u.firstname, u.picture, u.lastname, u.email as email, ue.attempt, ue.eventsecond, ue.url as url1, ue.urlfilesize';
+    $select = 'ue.id, u.id uid, u.firstname, u.picture, u.lastname, u.email as email,';
+    $select = $select. ' ue.attempt, ue.eventsecond, ue.url as url1, ue.urlfilesize';
     $sql = 'SELECT '.$select.' FROM {'.$ve.'} as ue Inner JOIN  {'.$u.'} as u ON ue.userid=u.id where '.$where;
     $rec = $DB->get_records_sql($sql);
 } else if ($firstinitial && $lastinitial) {
     $where = ' ue.quizid=' . $quizid . ' AND firstname LIKE "' . $firstinitial . '%"AND lastname LIKE "' . $lastinitial . '%"';
-    $select = 'ue.id, u.id uid, u.firstname, u.picture, u.lastname, u.email, ue.attempt, ue.eventsecond, ue.url as url1, ue.urlfilesize';
+    $select = 'ue.id, u.id uid, u.firstname, u.picture, u.lastname, u.email,';
+    $select = $select . ' ue.attempt, ue.eventsecond, ue.url as url1, ue.urlfilesize';
     $sql = 'SELECT '.$select.' FROM {'.$ve.'} as ue Inner JOIN  {'.$u.'} as u ON ue.userid=u.id where '.$where;
     $rec = $DB->get_records_sql($sql);
 } else {
     $where = ' ue.quizid=' . $quizid . ' AND firstname LIKE "' . $firstinitial . '%"';
-    $select = 'ue.id, u.id as uid, u.picture, u.firstname, u.lastname, u.email, ue.attempt, ue.eventsecond, ue.url as url1, ue.urlfilesize';
+    $select = 'ue.id, u.id as uid, u.picture, u.firstname, u.lastname, u.email,';
+    $select = ' ue.attempt, ue.eventsecond, ue.url as url1, ue.urlfilesize';
     $sql = 'SELECT '.$select.' FROM {'.$ve.'} as ue Inner JOIN  {'.$u.'} as u ON ue.userid=u.id where '.$where;
-
     $rec = $DB->get_records_sql($sql);
 }
 foreach ($rec as $records) {
